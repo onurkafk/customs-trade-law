@@ -1,39 +1,67 @@
-# customs-trade-law — U.S. Customs and Trade Law Skill
+# customs-trade-law
 
-An Agent Skill for U.S. trade & customs classification, CROSS ruling research, CIT/CAFC decision analysis, duty rate compilation, country of origin determination, and compliance review.
+A Claude Code Agent Skill for U.S. customs classification and trade-law research.
 
-> **Disclaimer.** All outputs produced by this skill are **draft work product** intended for review by a U.S.-licensed attorney or licensed customs broker. Nothing in this skill or its outputs constitutes legal advice, and no attorney-client or broker-client relationship is created by its use. Users must independently verify all classifications, duty rates, and compliance determinations before relying on them for any import transaction.
+It helps prepare attorney-reviewable draft work product for HTSUS classification, CROSS ruling research, CIT/CAFC decision briefing, duty compilation, country-of-origin analysis, Chapter 99 screening, AD/CVD issue spotting, PGA review, and UFLPA forced-labor checks.
 
-**Author:** M. Onur Kafkas
-**License:** [AGPL-3.0](./LICENSE)
-**Skill version:** 1.0.2
-
----
+> Draft work product only. Not legal advice. Outputs must be reviewed by a U.S.-licensed attorney or licensed customs broker before use in an import transaction.
 
 ## Install
 
-Use Claude Code's marketplace install (two commands):
-
-```
+```text
 /plugin marketplace add onurkafk/customs-trade-law
 /plugin install customs-trade-law@onurkafk
 ```
 
-After install, restart Claude Code (or start a new session). The skill auto-triggers when you mention HTS classification, tariff lookups, CROSS rulings, CIT/CAFC decisions, duty calculation, country of origin, Section 301/232/201, AD/CVD, PGA, or UFLPA topics. No slash command needed.
+Restart Claude Code or start a new session after installing.
 
-### Alternative: clone directly
+Alternative local install:
 
 ```sh
 git clone https://github.com/onurkafk/customs-trade-law.git ~/.claude/skills/customs-trade-law
 ```
 
-> The repo was previously published at `onurkafk/trade-law`. GitHub auto-redirects the old URL, so existing clones keep working — but new installs should use the URL above.
+## Use
 
----
+No slash command is required. Ask naturally:
 
-## Required permissions
+```text
+Classify a Bluetooth keyboard from China.
+Find CROSS rulings for ceramic mugs under heading 6912.
+Calculate duty for HTS 8471.30.0100 from Taiwan.
+Check whether Section 301 applies to this product.
+Run an import compliance review for medical devices from Vietnam.
+```
 
-The skill fetches data from live U.S. government sources. Before first use, add these `WebFetch` domains to your Claude Code settings (`~/.claude/settings.local.json` or project-level):
+## What It Handles
+
+- HTSUS classification using GRI 1-6 and Additional U.S. Rules
+- CROSS ruling research with HQ/NY authority weighting
+- CIT and CAFC decision analysis from retrieved opinion text
+- Duty compilation: General, Special, Chapter 99, AD/CVD, MPF, HMF
+- Country of origin, marking, FTA qualification, and TAA review
+- PGA and UFLPA screening for import compliance risk
+
+## How It Works
+
+The skill enforces a U.S. customs authority hierarchy:
+
+```text
+HTSUS legal text > CAFC > CIT > CBP HQ > CBP NY > agency guidance > secondary sources
+```
+
+It also requires:
+
+- current HTS JSON discovery through Data.gov before hierarchy-sensitive analysis
+- source labels: `Verified`, `Retrieved`, `Identified`, `Unverified`
+- evidence ledgers for material legal conclusions
+- explicit human-review flags for missing facts, conflicts, stale sources, and high-risk ambiguity
+
+Core operating rules live in [`SKILL.md`](./SKILL.md). A worked example is available at [`examples/output.md`](./examples/output.md).
+
+## Permissions
+
+The skill retrieves live government sources. Add these `WebFetch` permissions to `~/.claude/settings.local.json` or your project settings:
 
 ```json
 {
@@ -55,93 +83,26 @@ The skill fetches data from live U.S. government sources. Before first use, add 
 }
 ```
 
-Automated merge into an existing settings file:
+## Repository
 
-```sh
-jq '.permissions.allow += [
-  "WebFetch(hts.usitc.gov/*)",
-  "WebFetch(www.usitc.gov/*)",
-  "WebFetch(catalog.data.gov/*)",
-  "WebFetch(search.uscourts.gov/*)",
-  "WebFetch(www.cit.uscourts.gov/*)",
-  "WebFetch(law.justia.com/*)",
-  "WebFetch(www.federalregister.gov/*)",
-  "WebFetch(rulings.cbp.gov/*)",
-  "WebFetch(ustr.gov/*)",
-  "WebFetch(www.trade.gov/*)",
-  "WebFetch(www.cbp.gov/*)"
-] | .permissions.allow |= unique' ~/.claude/settings.local.json > /tmp/s.json && mv /tmp/s.json ~/.claude/settings.local.json
+```text
+customs-trade-law/
+├── SKILL.md            # skill manifest and workflow router
+├── references/         # methodology, doctrine, source maps, disclaimers
+├── templates/          # output templates
+├── scripts/            # HTS, CIT, and hierarchy helpers
+├── examples/           # worked examples
+├── evals/              # evaluation scenarios
+├── CHANGELOG.md
+└── LICENSE
 ```
 
----
+## Version
 
-## What the skill does
+Current skill version: `1.0.2`
 
-| # | Workflow | Description |
-|---|----------|-------------|
-| 1 | Classify a product | Full GRI 1–6 analysis with CROSS research, CIT/CAFC check, duty compilation |
-| 2 | Research CROSS rulings | Search and digest CBP rulings with authority-level assessment |
-| 3 | Analyze CIT/CAFC decision | Court decision briefing with precedent mapping and strategic analysis |
-| 4 | Calculate duty rate | Revision-aware: General + Special + Chapter 99 + AD/CVD + MPF/HMF |
-| 5 | Check surcharges | Section 301 / 232 / 201 applicability and exclusion screening |
-| 6 | Country of origin analysis | Marking, FTA qualification, TAA compliance, substantial transformation |
-| 7 | Full compliance review | Classification + duty + origin + PGA + UFLPA screening |
-| 8 | Source / evidence control | HTS Data.gov discovery, evidence ledger, freshness blocks, human-review triggers |
-
-The full authority hierarchy (HTSUS legal text > CAFC > CIT > CBP HQ > CBP NY > ICPs > secondary), the HTS data discovery protocol, and the workflow router live in [`SKILL.md`](./SKILL.md).
-
-A worked end-to-end example is at [`examples/output.md`](./examples/output.md).
-
----
-
-## Domains the skill accesses
-
-| Domain | Purpose |
-|--------|---------|
-| `hts.usitc.gov` | USITC HTS REST API (tariff data) |
-| `www.usitc.gov` | USITC website (general reference) |
-| `catalog.data.gov` | Data.gov HTS catalog metadata and JSON discovery |
-| `search.uscourts.gov` | Federal court decision search |
-| `www.cit.uscourts.gov` | Court of International Trade slip opinions |
-| `law.justia.com` | CIT/CAFC full-text decisions |
-| `www.federalregister.gov` | AD/CVD orders and trade actions |
-| `rulings.cbp.gov` | CBP CROSS rulings |
-| `ustr.gov` | Section 301 official source materials |
-| `www.trade.gov` | Commerce/ITA AD/CVD source materials |
-| `www.cbp.gov` | CBP guidance, UFLPA, WRO, and import requirements |
-
----
-
-## Repository layout
-
-```
-customs-trade-law/                  # repo root IS the skill
-├── .claude-plugin/
-│   └── marketplace.json            # source: "./", skills: ["./"], strict: false
-├── SKILL.md                        # Skill manifest + workflow router (lq_ai frontmatter)
-├── README.md                       # This file
-├── LICENSE                         # AGPL-3.0
-├── CHANGELOG.md                    # Version history
-├── .gitignore
-├── examples/output.md              # Worked classification example
-├── references/                     # Methodology, doctrine, source maps, glossary (23 files)
-├── templates/                      # Five output templates
-└── scripts/                        # Python helpers (HTS resolver, CIT fetcher, hierarchy builder)
-```
-
----
-
-## Roadmap
-
-- **v1.1** — Customs Valuation (transaction value, assists, royalties, first-sale)
-- **v1.2** — Entry & Post-Entry (entry types, protests, reconciliation, prior disclosure)
-- **v1.3** — AD/CVD Deep Dive (scope rulings, circumvention, EAPA)
-- **v1.4** — Quota & TRQ
-- **v1.5** — Foreign Trade Zones
-- **v1.6** — Entry Document Review
-
----
+See [`CHANGELOG.md`](./CHANGELOG.md) for release notes.
 
 ## License
 
-AGPL-3.0 — see [`LICENSE`](./LICENSE).
+AGPL-3.0. See [`LICENSE`](./LICENSE).
