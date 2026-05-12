@@ -2,9 +2,13 @@
 
 All notable changes to this skill will be documented in this file. The format is loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow semver per the Agent Skills authoring conventions.
 
-## [1.0.0] — 2026-05-12
+## [1.0.0] — 2026-05-12 *(re-tagged after layout flatten)*
 
 First stable release as an Agent Skill.
+
+### Repository layout note
+
+The initial publish (commit `442e6a9`) shipped with the skill nested under `skills/customs-trade-law/`. Because this is a single-skill repo, the nesting was redundant. The layout was flattened: `SKILL.md` and its supporting directories now live at the repo root, and the GitHub repo was renamed from `onurkafk/trade-law` to `onurkafk/customs-trade-law`. GitHub auto-redirects the old URL. The `v1.0.0` tag was moved to the flattened commit.
 
 ### Added
 

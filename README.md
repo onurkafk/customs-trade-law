@@ -1,4 +1,4 @@
-# Trade Law — U.S. Customs and Trade Law Skill
+# customs-trade-law — U.S. Customs and Trade Law Skill
 
 An Agent Skill for U.S. trade & customs classification, CROSS ruling research, CIT/CAFC decision analysis, duty rate compilation, country of origin determination, and compliance review.
 
@@ -12,14 +12,15 @@ An Agent Skill for U.S. trade & customs classification, CROSS ruling research, C
 
 ## Install
 
-This repo hosts a single skill at `skills/customs-trade-law/`. To use it with Claude Code:
+This repo IS the skill — `SKILL.md` lives at the root. To use it with Claude Code, clone it straight into your skills directory:
 
 ```sh
-git clone https://github.com/onurkafk/trade-law.git
-cp -R trade-law/skills/customs-trade-law ~/.claude/skills/
+git clone https://github.com/onurkafk/customs-trade-law.git ~/.claude/skills/customs-trade-law
 ```
 
-After copying, restart Claude Code (or start a new session). The skill auto-triggers when you mention HTS classification, tariff lookups, CROSS rulings, CIT/CAFC decisions, duty calculation, country of origin, Section 301/232/201, AD/CVD, PGA, or UFLPA topics. No slash command needed.
+After cloning, restart Claude Code (or start a new session). The skill auto-triggers when you mention HTS classification, tariff lookups, CROSS rulings, CIT/CAFC decisions, duty calculation, country of origin, Section 301/232/201, AD/CVD, PGA, or UFLPA topics. No slash command needed.
+
+> The repo was previously published at `onurkafk/trade-law`. GitHub auto-redirects the old URL, so existing clones keep working — but new installs should use the URL above.
 
 ---
 
@@ -80,9 +81,9 @@ jq '.permissions.allow += [
 | 7 | Full compliance review | Classification + duty + origin + PGA + UFLPA screening |
 | 8 | Source / evidence control | HTS Data.gov discovery, evidence ledger, freshness blocks, human-review triggers |
 
-The full authority hierarchy (HTSUS legal text > CAFC > CIT > CBP HQ > CBP NY > ICPs > secondary), the HTS data discovery protocol, and the workflow router live in [`skills/customs-trade-law/SKILL.md`](./skills/customs-trade-law/SKILL.md).
+The full authority hierarchy (HTSUS legal text > CAFC > CIT > CBP HQ > CBP NY > ICPs > secondary), the HTS data discovery protocol, and the workflow router live in [`SKILL.md`](./SKILL.md).
 
-A worked end-to-end example is at [`skills/customs-trade-law/examples/output.md`](./skills/customs-trade-law/examples/output.md).
+A worked end-to-end example is at [`examples/output.md`](./examples/output.md).
 
 ---
 
@@ -107,20 +108,16 @@ A worked end-to-end example is at [`skills/customs-trade-law/examples/output.md`
 ## Repository layout
 
 ```
-trade-law/
+customs-trade-law/
+├── SKILL.md                        # Skill manifest + workflow router (lq_ai frontmatter)
 ├── README.md                       # This file
-├── LICENSE                         # AGPL-3.0 (repo-level)
+├── LICENSE                         # AGPL-3.0
 ├── CHANGELOG.md                    # Version history
 ├── .gitignore
-└── skills/
-    └── customs-trade-law/
-        ├── SKILL.md                # Skill manifest + workflow router
-        ├── README.md               # Skill-level README
-        ├── LICENSE                 # AGPL-3.0 (skill-level)
-        ├── examples/output.md      # Worked classification example
-        ├── references/             # Methodology, doctrine, source maps, glossary (23 files)
-        ├── templates/              # Five output templates
-        └── scripts/                # Python helpers (HTS resolver, CIT fetcher, hierarchy builder)
+├── examples/output.md              # Worked classification example
+├── references/                     # Methodology, doctrine, source maps, glossary (23 files)
+├── templates/                      # Five output templates
+└── scripts/                        # Python helpers (HTS resolver, CIT fetcher, hierarchy builder)
 ```
 
 ---
@@ -138,4 +135,4 @@ trade-law/
 
 ## License
 
-AGPL-3.0 — see [`LICENSE`](./LICENSE) and [`skills/customs-trade-law/LICENSE`](./skills/customs-trade-law/LICENSE).
+AGPL-3.0 — see [`LICENSE`](./LICENSE).
