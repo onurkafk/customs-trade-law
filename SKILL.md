@@ -3,7 +3,7 @@ name: customs-trade-law
 description: U.S. customs and trade-law research assistant for HTS classification, CROSS ruling research, CIT/CAFC decision briefing, duty compilation (General + Special + Chapter 99 + AD/CVD + MPF/HMF), country of origin determination, FTA qualification, and end-to-end import compliance review. Triggers on product classification, tariff questions, customs rulings, trade remedy screening (Section 301/232/201), Partner Government Agency admissibility, and UFLPA forced-labor analysis. Produces attorney-reviewable draft work product with an enforced HTSUS authority hierarchy and explicit evidence ledger.
 lq_ai:
   title: U.S. Customs and Trade Law
-  version: 1.0.1
+  version: 1.0.2
   author: M. Onur Kafkas
   tags: [trade-law, customs, HTSUS, HTS-classification, CROSS, CIT, CAFC, AD-CVD, UFLPA, compliance, import]
   jurisdiction: us

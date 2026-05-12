@@ -6,7 +6,7 @@ An Agent Skill for U.S. trade & customs classification, CROSS ruling research, C
 
 **Author:** M. Onur Kafkas
 **License:** [AGPL-3.0](./LICENSE)
-**Skill version:** 1.0.1
+**Skill version:** 1.0.2
 
 ---
 
@@ -24,8 +24,7 @@ After install, restart Claude Code (or start a new session). The skill auto-trig
 ### Alternative: clone directly
 
 ```sh
-git clone https://github.com/onurkafk/customs-trade-law.git /tmp/customs-trade-law
-cp -R /tmp/customs-trade-law/skills/customs-trade-law ~/.claude/skills/
+git clone https://github.com/onurkafk/customs-trade-law.git ~/.claude/skills/customs-trade-law
 ```
 
 > The repo was previously published at `onurkafk/trade-law`. GitHub auto-redirects the old URL, so existing clones keep working — but new installs should use the URL above.
@@ -89,9 +88,9 @@ jq '.permissions.allow += [
 | 7 | Full compliance review | Classification + duty + origin + PGA + UFLPA screening |
 | 8 | Source / evidence control | HTS Data.gov discovery, evidence ledger, freshness blocks, human-review triggers |
 
-The full authority hierarchy (HTSUS legal text > CAFC > CIT > CBP HQ > CBP NY > ICPs > secondary), the HTS data discovery protocol, and the workflow router live in [`skills/customs-trade-law/SKILL.md`](./skills/customs-trade-law/SKILL.md).
+The full authority hierarchy (HTSUS legal text > CAFC > CIT > CBP HQ > CBP NY > ICPs > secondary), the HTS data discovery protocol, and the workflow router live in [`SKILL.md`](./SKILL.md).
 
-A worked end-to-end example is at [`skills/customs-trade-law/examples/output.md`](./skills/customs-trade-law/examples/output.md).
+A worked end-to-end example is at [`examples/output.md`](./examples/output.md).
 
 ---
 
@@ -116,20 +115,18 @@ A worked end-to-end example is at [`skills/customs-trade-law/examples/output.md`
 ## Repository layout
 
 ```
-customs-trade-law/
+customs-trade-law/                  # repo root IS the skill
 ├── .claude-plugin/
-│   └── marketplace.json            # Marketplace manifest (owner: onurkafk; one skill)
+│   └── marketplace.json            # source: "./", skills: ["./"], strict: false
+├── SKILL.md                        # Skill manifest + workflow router (lq_ai frontmatter)
 ├── README.md                       # This file
 ├── LICENSE                         # AGPL-3.0
 ├── CHANGELOG.md                    # Version history
 ├── .gitignore
-└── skills/
-    └── customs-trade-law/
-        ├── SKILL.md                # Skill manifest + workflow router (lq_ai frontmatter)
-        ├── examples/output.md      # Worked classification example
-        ├── references/             # Methodology, doctrine, source maps, glossary (23 files)
-        ├── templates/              # Five output templates
-        └── scripts/                # Python helpers (HTS resolver, CIT fetcher, hierarchy builder)
+├── examples/output.md              # Worked classification example
+├── references/                     # Methodology, doctrine, source maps, glossary (23 files)
+├── templates/                      # Five output templates
+└── scripts/                        # Python helpers (HTS resolver, CIT fetcher, hierarchy builder)
 ```
 
 ---

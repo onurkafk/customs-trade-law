@@ -2,6 +2,16 @@
 
 All notable changes to this skill will be documented in this file. The format is loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow semver per the Agent Skills authoring conventions.
 
+## [1.0.2] — 2026-05-12
+
+### Changed
+
+- **Flat layout with marketplace install (now both at once).** SKILL.md lives directly at the repo root. The marketplace entry uses `source: "./"`, `skills: ["./"]`, and `strict: false`, which together tell Claude Code to treat the repo root as the skill folder (per the plugins-reference docs: "When a skill path points to a directory that contains a `SKILL.md` directly, for example `\"skills\": [\"./\"]` pointing to the plugin root, the frontmatter `name` field in `SKILL.md` determines the skill's invocation name"). No more `skills/customs-trade-law/` nesting.
+
+### Note
+
+The 1.0.1 packaging assumed the marketplace mechanism required `source: "./skills/<name>"`. That was wrong — the flat layout is supported via the schema fields above. Install command is unchanged: `/plugin marketplace add onurkafk/customs-trade-law` + `/plugin install customs-trade-law@onurkafk`.
+
 ## [1.0.1] — 2026-05-12
 
 ### Changed

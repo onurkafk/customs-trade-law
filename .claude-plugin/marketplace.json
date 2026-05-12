@@ -9,12 +9,14 @@
     {
       "name": "customs-trade-law",
       "description": "Agent Skill for U.S. customs and trade-law research — HTS classification, CROSS rulings, CIT/CAFC briefing, duty compilation, country of origin determination, and import compliance review.",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "M. Onur Kafkas"
       },
       "license": "AGPL-3.0",
-      "source": "./skills/customs-trade-law"
+      "source": "./",
+      "skills": ["./"],
+      "strict": false
     }
   ]
 }
