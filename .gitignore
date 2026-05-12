@@ -32,7 +32,5 @@ scripts/eval-runner.py
 # Local settings (users configure their own)
 .claude/settings.local.json
 
-# Demo video
-demo-video/node_modules/
-demo-video/out/
-demo-video/public/source.mov
+# Demo video (not part of the published skill)
+demo-video/
