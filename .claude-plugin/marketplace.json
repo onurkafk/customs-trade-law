@@ -1,0 +1,20 @@
+{
+  "name": "onurkafk",
+  "version": "1.0.0",
+  "description": "M. Onur Kafkas's Agent Skills for U.S. legal work",
+  "owner": {
+    "name": "M. Onur Kafkas"
+  },
+  "plugins": [
+    {
+      "name": "customs-trade-law",
+      "description": "Agent Skill for U.S. customs and trade-law research — HTS classification, CROSS rulings, CIT/CAFC briefing, duty compilation, country of origin determination, and import compliance review.",
+      "version": "1.0.1",
+      "author": {
+        "name": "M. Onur Kafkas"
+      },
+      "license": "AGPL-3.0",
+      "source": "./skills/customs-trade-law"
+    }
+  ]
+}

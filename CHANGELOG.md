@@ -2,6 +2,17 @@
 
 All notable changes to this skill will be documented in this file. The format is loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow semver per the Agent Skills authoring conventions.
 
+## [1.0.1] — 2026-05-12
+
+### Changed
+
+- **Install path.** Added a `.claude-plugin/marketplace.json` at the repo root, enabling Claude Code's first-class marketplace install: `/plugin marketplace add onurkafk/customs-trade-law` followed by `/plugin install customs-trade-law@onurkafk`. The previous `git clone` install remains available as an alternative.
+- **Layout.** Re-nested the skill under `skills/customs-trade-law/` because the marketplace mechanism requires `source: "./skills/<name>"` (a flat repo root is not a supported source per the Claude Code plugin docs). The skill content itself is unchanged — only the directory it lives in.
+
+### Note
+
+This is a packaging change. The skill's behavior, methodology, references, templates, and scripts are identical to 1.0.0.
+
 ## [1.0.0] — 2026-05-12 *(re-tagged after layout flatten)*
 
 First stable release as an Agent Skill.
